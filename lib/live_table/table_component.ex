@@ -26,6 +26,8 @@ defmodule LiveTable.TableComponent do
       defp render_header(var!(assigns)) do
         ~H"""
         <.header_section
+          common_controls_extra={@common_controls_extra}
+          header_section_extra={@header_section_extra}
           fields={@fields}
           filters={@filters}
           options={@options}
@@ -46,10 +48,13 @@ defmodule LiveTable.TableComponent do
               <.exports formats={get_in(@table_options, [:exports, :formats])} />
             </div>
           </div>
-          
+
+          {@header_section_extra}
+
         <!-- Controls section -->
           <div class="mt-4">
             <.common_controls
+              common_controls_extra={@common_controls_extra}
               fields={@fields}
               filters={@filters}
               options={@options}
@@ -71,8 +76,12 @@ defmodule LiveTable.TableComponent do
               <.exports formats={get_in(@table_options, [:exports, :formats])} />
             </div>
           </div>
+
+          {@header_section_extra}
+
           <div class="mt-4">
             <.common_controls
+              common_controls_extra={@common_controls_extra}
               fields={@fields}
               filters={@filters}
               options={@options}
@@ -128,7 +137,7 @@ defmodule LiveTable.TableComponent do
                     />
                   </div>
                 </div>
-                
+
         <!-- Per page -->
                 <select
                   :if={@options["pagination"]["paginate?"]}
@@ -142,7 +151,9 @@ defmodule LiveTable.TableComponent do
                   )}
                 </select>
               </div>
-              
+
+             {@common_controls_extra}
+
         <!-- Filter toggle -->
               <button
                 :if={length(@filters) > 3}
@@ -160,7 +171,7 @@ defmodule LiveTable.TableComponent do
                 <span phx-update="ignore" id="filter-toggle-text">Filters</span>
               </button>
             </div>
-            
+
         <!-- Filters section -->
             <div
               id="filters-container"
@@ -187,6 +198,9 @@ defmodule LiveTable.TableComponent do
 
       defp content_section(%{table_options: %{mode: :table}} = var!(assigns)) do
         ~H"""
+
+        {@content_section_extra}
+
         <div class="mt-8 flow-root">
           <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -245,6 +259,9 @@ defmodule LiveTable.TableComponent do
 
       defp content_section(%{table_options: %{mode: :card, use_streams: false}} = var!(assigns)) do
         ~H"""
+
+        {@content_section_extra}
+
         <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <div :for={record <- @streams}>
             {@table_options.card_component.(%{record: record})}
@@ -255,6 +272,9 @@ defmodule LiveTable.TableComponent do
 
       defp content_section(%{table_options: %{mode: :card, use_streams: true}} = var!(assigns)) do
         ~H"""
+
+        {@content_section_extra}
+
         <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <div :for={{id, record} <- @streams.resources} id={id}>
             {@table_options.card_component.(%{record: record})}
@@ -309,6 +329,9 @@ defmodule LiveTable.TableComponent do
           current_page={@options["pagination"]["page"]}
           has_next_page={@options["pagination"][:has_next_page]}
         />
+
+        {@footer_section}
+
         """
       end
 

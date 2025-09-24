@@ -119,6 +119,10 @@ end
   filters={filters()}
   options={@options}
   streams={@streams}
+  common_controls_extra={@common_controls_extra}
+  header_section_extra={@header_section_extra}
+  content_section_extra={@content_section_extra}
+  footer_section_extra={@footer_section_extra}
 />
 ```
 
