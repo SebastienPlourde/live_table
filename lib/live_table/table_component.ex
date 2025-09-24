@@ -330,7 +330,7 @@ defmodule LiveTable.TableComponent do
           has_next_page={@options["pagination"][:has_next_page]}
         />
 
-        {@footer_section}
+        {@footer_section_extra}
 
         """
       end
