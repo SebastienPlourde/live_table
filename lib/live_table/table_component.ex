@@ -332,6 +332,7 @@ defmodule LiveTable.TableComponent do
 
         {@footer_section_extra}
 
+
         """
       end
 
